@@ -24,17 +24,26 @@ class App extends Component {
     }
   }
 
-  handleLike = (id) => {
+  onLikeClick = (id) => {
     console.log("like clicked", id);
     // copying
     const simpsons = [...this.state.simpsons];
     // finding index
-    const characterIndex = simpsons.findIndex((character) => {
-      return character.id === id;
-    });
+    const characterIndex = simpsons.findIndex(
+      (character) => character.id === id
+    );
     // toggle liked
     simpsons[characterIndex].liked = !simpsons[characterIndex].liked;
     // save state
+    this.setState({ simpsons });
+  };
+
+  onDeleteClick = (id) => {
+    const simpsons = [...this.state.simpsons];
+    const characterIndex = simpsons.findIndex(
+      (character) => character.id === id
+    );
+    simpsons.splice(characterIndex, 1);
     this.setState({ simpsons });
   };
 
@@ -91,12 +100,20 @@ class App extends Component {
 
         {filteredSimpsons.map((character) => {
           return (
-            <Character handleLike={this.handleLike} character={character} />
+            <Character
+              onLikeClick={this.onLikeClick}
+              character={character}
+              onDeleteClick={this.onDeleteClick}
+            />
           );
         })}
         {filteredQuotes.map((character) => {
           return (
-            <Character handleLike={this.handleLike} character={character} />
+            <Character
+              onLikeClick={this.onLikeClick}
+              character={character}
+              onDeleteClick={this.onDeleteClick}
+            />
           );
         })}
       </div>

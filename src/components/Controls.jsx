@@ -3,16 +3,11 @@ import Button from "./Button";
 
 class Controls extends Component {
   render() {
+    const { id, liked, onLikeClick, onDeleteClick } = this.props;
     return (
       <div className="controls">
-        {/* add delete button here later */}
-        {/* <Button text={"Delete"} /> */}
-        <Button
-          id={this.props.id}
-          liked={this.props.liked}
-          handleLike={this.props.handleLike}
-          text={"Liked"}
-        />
+        <Button text={"Delete"} id={id} onClick={onDeleteClick} />
+        <Button id={id} liked={liked} onClick={onLikeClick} text={"Liked"} />
       </div>
     );
   }

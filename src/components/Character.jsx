@@ -9,6 +9,7 @@ class Character extends Component {
     const { character, quote, image, characterDirection, id, liked } =
       this.props.character;
 
+    const { onLikeClick, onDeleteClick } = this.props;
     // console.log(characterDirection);
 
     if (characterDirection === "Left") {
@@ -17,7 +18,12 @@ class Character extends Component {
           <Name name={character} />
           <Image image={image} />
           <Quote quote={quote} />
-          <Controls id={id} liked={liked} handleLike={this.props.handleLike} />
+          <Controls
+            id={id}
+            liked={liked}
+            onLikeClick={onLikeClick}
+            onDeleteClick={onDeleteClick}
+          />
         </div>
       );
     }
@@ -27,7 +33,12 @@ class Character extends Component {
         <Name name={character} />
         <Quote quote={quote} />
         <Image image={image} />
-        <Controls id={id} liked={liked} handleLike={this.props.handleLike} />
+        <Controls
+          id={id}
+          liked={liked}
+          onLikeClick={onLikeClick}
+          onDeleteClick={onDeleteClick}
+        />
       </div>
     );
   }

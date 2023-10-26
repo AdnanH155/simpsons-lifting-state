@@ -5,14 +5,14 @@ class Button extends Component {
 
   render() {
     // console.log(this.state);
-    const { text, handleLike, id, liked } = this.props;
+    const { text, onClick, id, liked } = this.props;
     // const { clicked } = this.state;
     return (
       <button
-        className={liked ? "liked" : "not-liked"}
-        onClick={() => handleLike(id)}
+        // className={liked ? "liked" : "not-liked"}
+        onClick={() => onClick(id)}
       >
-        &#128077;
+        {text}
       </button>
     );
   }
