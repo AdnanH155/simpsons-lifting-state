@@ -7,7 +7,13 @@ class Controls extends Component {
     return (
       <div className="controls">
         <Button text={"Delete"} id={id} onClick={onDeleteClick} />
-        <Button id={id} liked={liked} onClick={onLikeClick} text={"Liked"} />
+        <Button
+          id={id}
+          className={liked ? "liked" : "not-liked"}
+          liked={liked}
+          onClick={onLikeClick}
+          text={liked ? "Liked" : "Like"}
+        />
       </div>
     );
   }

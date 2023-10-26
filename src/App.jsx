@@ -52,9 +52,14 @@ class App extends Component {
     this.setState({ search: e.target.value });
   };
 
+  onSortSelection = (e) => {
+    console.log(e.target.value);
+    this.setState({ sort: e.target.value });
+  };
+
   render() {
     console.log(this.state);
-    const { simpsons } = this.state;
+    const { simpsons, sort } = this.state;
 
     if (!simpsons) {
       return (
@@ -62,6 +67,31 @@ class App extends Component {
           <Spinner />
         </div>
       );
+    }
+
+    const localSimpsons = [...simpsons];
+    // sort by function
+    if (sort === "az") {
+      localSimpsons.sort((item1, item2) => {
+        if (item1.character > item2.character) {
+          return 1;
+        }
+        if (item1.character < item2.character) {
+          return -1;
+        }
+        return 0;
+      });
+    }
+    if (sort === "za") {
+      localSimpsons.sort((item1, item2) => {
+        if (item1.character > item2.character) {
+          return -1;
+        }
+        if (item1.character < item2.character) {
+          return 1;
+        }
+        return 0;
+      });
     }
 
     // filtering the data
@@ -73,8 +103,6 @@ class App extends Component {
     const filteredQuotes = simpsons.filter((item) => {
       return item.quote.toLowerCase().includes(this.state.search.toLowerCase());
     });
-    console.log(filteredQuotes);
-    console.log(filteredSimpsons);
 
     // total liked
     let total = 0;
@@ -86,7 +114,6 @@ class App extends Component {
 
     return (
       <div className="container">
-        {/* add sort by a-z function here later */}
         <h1>Simpsons random quote generator</h1>
         <h3>Total Liked: {total}</h3>
         <div className="searchBar">
@@ -96,11 +123,30 @@ class App extends Component {
             id="search"
             onInput={this.onInput}
           ></input>
+          <div className="controls">
+            <label htmlFor="sort">Sort by</label>
+            <select name="sort" id="sort" onChange={this.onSortSelection}>
+              <option value="az">A to Z</option>
+              <option value="za">Z to A</option>
+            </select>
+          </div>
         </div>
+
+        {localSimpsons.map((character) => {
+          return (
+            <Character
+              key={character.id}
+              onLikeClick={this.onLikeClick}
+              character={character}
+              onDeleteClick={this.onDeleteClick}
+            />
+          );
+        })}
 
         {filteredSimpsons.map((character) => {
           return (
             <Character
+              key={character.id}
               onLikeClick={this.onLikeClick}
               character={character}
               onDeleteClick={this.onDeleteClick}
@@ -110,6 +156,7 @@ class App extends Component {
         {filteredQuotes.map((character) => {
           return (
             <Character
+              key={character.id}
               onLikeClick={this.onLikeClick}
               character={character}
               onDeleteClick={this.onDeleteClick}
